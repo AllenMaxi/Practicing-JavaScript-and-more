@@ -184,3 +184,87 @@ const getNombreAxios = async (idPost) => {
     }
     
     getNombreAxios(6)
+
+
+ //Simulando un ejercicio de promesas con .then y async/await
+//Promesas: Ejemplo simulador con varias respuestas
+function requestHandler(req, res){
+    //Llamar a la base de datos:
+    User.findById(req,userId)
+    //El dato que esperamos
+    .then(function(user){
+        return Task.findById(user.taskId)
+    })
+    //Otra funcion que tome las tareas del paso anterior:
+    .then(function(task){
+        task.completed = true;
+        task.save() //Guardarlas lleva tiempo asi que se continuara con otra promesa
+    })
+    .then(function(){
+        res.send("task completed");//Con res send nos referimos a enviar respuesta, puede ser a la consola.
+    })
+    //Cuando ocurre un error
+    .catch(function(errors){
+        console.log(errors)
+    })
+}
+
+//Simulando el mismo codigo con Async/Await: Pidiendole info a una base de datos
+async function requestHandler(req, res){
+try{
+    //Llamar a la base de datos:
+    const user =  await User.findById(req,userId);
+    const tasks = await Tasks.findById(user.tasksId);
+    tasks.completed = true;
+ //En este caso no es necesaria la respuesta ya que no se necesita guardar nada:
+    await task.save();
+    res.send("Task completed") }
+
+catch(error){
+    res.send(error);//Simulamos un console.log
+}
+
+}
+
+//Otro ejemplo con Fetch API 
+//Fetch retorna una promesa, cuando se resuelve la parseamos en json lo que retorna otra promesa y cuando se resuelve imprimimos el contenido.
+function getNombre2(username) {
+let url = `https://api.github.com/users/${username}`
+fetch(url)
+         .then(res => res.json())
+         .then(json => {
+             console.log(json.name)
+         })
+}
+getNombre2("AllenMaxi");
+
+//Con Async/Await Leyendo info de la API de github
+ const getNombreAsyncro = async (username)=>{
+ try{
+     let url = `https://api.github.com/users/${username}`
+     const res = await fetch(url);
+     const data = await res.json();
+     console.log(data.name)
+       }
+ catch (error) { 
+     console.log(error) 
+   }
+    
+ }
+ getNombreAsyncro("AllenMaxi");
+
+ //Tambien se puede retornar e imprimir ese nombre con .then
+const getNombreAsyncro1 = async (username)=>{
+    try{
+        let url1 = `https://api.github.com/users/${username}`
+        const res = await fetch(url1);
+        const data = await res.json();
+        return data.name
+          }
+    catch (error) { 
+        console.log(error) 
+      }
+        
+    }
+    getNombreAsyncro1("AllenMaxi")
+          .then ((nombre) => console.log(nombre))
