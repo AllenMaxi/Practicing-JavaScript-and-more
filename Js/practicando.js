@@ -29,6 +29,9 @@ for (const producto of productos){
     producto.sumaIva();}
     console.log(productos)
 
+//Si solo se quiere sumar a uno solo el iva:
+productos[0].sumaIva();
+
 //Ejerciocios de practica
     const numero = (numero1, numero2)=> 
     (`el numero es: ${numero1 + numero2}`);
@@ -240,17 +243,17 @@ getNombre2("AllenMaxi");
 
 //Con Async/Await Leyendo info de la API de github
  const getNombreAsyncro = async (username)=>{
+  
  try{
      let url = `https://api.github.com/users/${username}`
      const res = await fetch(url);
      const data = await res.json();
-     console.log(data.name)
-       }
- catch (error) { 
-     console.log(error) 
-   }
-    
- }
+     console.log(data.name)}
+    catch (error){
+        console.log(error)
+      }
+  }
+
  getNombreAsyncro("AllenMaxi");
 
  //Tambien se puede retornar e imprimir ese nombre con .then
@@ -266,5 +269,8 @@ const getNombreAsyncro1 = async (username)=>{
       }
         
     }
+  
     getNombreAsyncro1("AllenMaxi")
           .then ((nombre) => console.log(nombre))
+          .catch (error => console.log(error));
+          
