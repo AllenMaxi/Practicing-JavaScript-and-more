@@ -162,3 +162,61 @@ arrayElement.forEach(item =>{
 })
 
 lista.appendChild(fragment);
+
+               //AddEventListeners
+   //Evento de click
+// const btnAumentar = document.querySelector(".btn-info")
+const span = document.getElementById("span");
+// const btnDisminuir = document.querySelector(".btn-danger")
+let contador = 0;
+       //Aumentar
+// btnAumentar.addEventListener("click", () =>{
+//     console.log("me diste click");//Saber que se esta detectando
+//     contador++;//Aumentar el contador cada vez que se de click en el boton de aumentar.
+//     span.textContent = contador;//Para que el contenido del span sea igual al contador.
+// })
+      //Disminuir
+//   btnDisminuir.addEventListener("click", () =>{
+//     console.log("me diste click");//Saber que se esta detectando
+//     contador--;//Disminuir el contador cada vez que se de click en el boton de disminuir.
+//     span.textContent = contador;//Para que el contenido del span sea igual al contador.
+// })
+
+      // Otra Opcion: EVENT DELEGATION
+
+const container = document.querySelector(".container");
+
+container.addEventListener("click", event =>{
+    // console.log(event.target);//cada vez que presionemos nos traera a consola el elemento que estamos presionando.
+    // console.log(event.target.classList.contains("btn-info"))//Nos tirara falso si no apretamos el boton Aumentar.
+//Delegar eventos (detectar el boton de aumentar y disminuir)
+if(event.target.classList.contains("btn-info")){//Si es true aumentara el contador
+    contador++
+span.textContent = contador;
+}
+if(event.target.classList.contains("btn-danger")){//Si es true disminuira el contador
+    contador--
+span.textContent = contador;
+}
+event.stopPropagation();
+})
+
+
+         //Stop PROPAGATION:
+document.body.addEventListener("click", ()=>{
+    console.log("diste click")//Cada vez que demos click en el body aparecera esto
+//Para que dentro del container no suceda se le agrega event.stopPropagation al final
+
+} )
+
+     //Otro Ejercicio de Stop Propagation
+const btn = document.querySelector(".btn-dark");
+const bgSuccess = document.querySelector(".bg-success");
+
+btn.addEventListener("click", (event)=>{
+    console.log("diste click en btn");//Aparecera diste click btn pero tambien diste click bgSuccess
+   event.stopPropagation(); //Hara que solo aparezca diste click en btn y el evento del elemento padre no se propage
+})
+bgSuccess.addEventListener("click", ()=>{
+    console.log("diste click en bgSuccess");//Se propagara
+})
